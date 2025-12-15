@@ -11,27 +11,40 @@ This library allows you to run robust wake word detection (e.g., "Hey Jarvis") e
 # 🛠 Usage
 You can use this package without building by including the files in the dist branch via CDN!   
 ```
-//Minimal Usage example
-//Replace URLs with CDN URLs!
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/browser.js"></script>
+    <script>
+        //Minimal Usage example
+        const engine = new WakeWordEngine({
+            vadModelPath: "https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/silero_vad.onnx",
+            melModelPath: "https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/melspectrogram.onnx",
+            embeddingModelPath: "https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/embedding_model.onnx",
+            models: [
+                ['alexa', 'https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/alexa_v0.1.onnx']
+                //Add your models as needed
+            ],
+            executionProviders: ["wasm"]
+        });
 
-<script src="/browser.js"></script>
-<script>
-    const engine = new WakeWordEngine({
-        vadModelPath: "..../silero_vad.onnx",
-        melModelPath: "..../melspectrogram.onnx",
-        embeddingModelPath: "..../embedding_model.onnx",
-        models: [
-            ['alexa', '..../alexa_v0.1.onnx']
-        ],
-    });
+        //Handles detections
+        engine.on('detect', (evt) => {
+            console.log(`🎯 Detected: "${evt.keyword}" (Score: ${evt.score.toFixed(2)})`, 'success');
+            document.body.innerHTML += "<a>DETECTED</a><br>";  
+        });
 
-    engine.on('detect', (evt) => {
-        console.log(`🎯 Detected: "${evt.keyword}" (Score: ${evt.score.toFixed(2)})`, 'success');
-        document.body.innerHTML += "<a>DETECTED</a><br>";  
-    });
+        //Logs a graph to console each second
+        setInterval(() => console.log(engine.toDownStream()), 1000);
 
-    engine.start();
-</script>
+        engine.start();
+    </script>
+</body>
+</html>
 ```
 
 # 📝License & Attribution
