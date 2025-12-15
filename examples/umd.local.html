@@ -16,7 +16,8 @@
                 ['alexa', '../dist/browser/models/alexa_v0.1.onnx']
                 //Add your models as needed
             ],
-            executionProviders: ["wasm"]
+            executionProviders: ["wasm"],
+            wasmPaths: "../dist/browser/onnx/"
         });
 
         //Handles detections

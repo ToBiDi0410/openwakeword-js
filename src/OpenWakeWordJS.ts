@@ -71,7 +71,6 @@ export class OpenWakeWordJS extends EventEmitter {
         this.cooldownMs = cooldownMs;
         this._isCoolingDown = false;
         env.wasm.wasmPaths = wasmPaths;
-        console.log("[OpenWakeWordJS] WASM Paths", wasmPaths);
 
         // 1. Instantiate Nodes
         this.source = new MicrophoneNode("Microphone", sampleRate);
