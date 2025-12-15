@@ -34,9 +34,22 @@ jobs:
         PARCEL_WORKER_BACKEND: process
       run: npm run build
 
-    # Deploy to GitHub Pages
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        branch: ./  # The branch you want to deploy to
-        folder: dist  # The folder to deploy from
+    # Deploy root directory
+    - name: Deploy to Dist Branch
+      run: |
+        # Configure Git
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+        # Delete the files we want to exclude so they aren't indexed
+        rm -rf node_modules package-lock.json
+
+        # Create a fresh, empty branch
+        git checkout --orphan dist-branch
+        
+        # Add all remaining files (the new contents)
+        git add .
+        
+        # Commit and Force Push to overwrite the remote 'dist' branch
+        git commit -m "Deploy to dist"
+        git push origin dist-branch:dist --force
