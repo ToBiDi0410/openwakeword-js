@@ -7,7 +7,7 @@ import { CallbackNode } from './nodes/CallbackNode';
 import { Detection } from './core/interfaces';
 import { EventEmitter } from './core/EventEmitter';
 
-export interface WakeWordEngineOptions {
+export interface OpenWakeWordJSOptions {
     // Microphone
     sampleRate?: number;
     frameSize?: number;
@@ -29,7 +29,7 @@ export interface WakeWordEngineOptions {
     executionProviders?: string[];
 }
 
-export class WakeWordEngine extends EventEmitter {
+export class OpenWakeWordJS extends EventEmitter {
     // Public access to nodes for inspection/debugging
     public source: MicrophoneNode;
     public vad: VadNode;
@@ -63,7 +63,7 @@ export class WakeWordEngine extends EventEmitter {
         
         // Global
         executionProviders = ['wasm'],
-    }: WakeWordEngineOptions) {
+    }: OpenWakeWordJSOptions) {
         super();
         this.cooldownMs = cooldownMs;
         this._isCoolingDown = false;

@@ -1,57 +1,38 @@
 {
   "name": "openwakeword-js",
-  "author": "ToDi0410",
-  "version": "0.0.1",
-  "source": "src/WakeWordEngine.ts",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "parcel build",
-    "watch": "parcel watch"
+  "version": "0.0.2",
+  "source": "src/index.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/esm/index.d.ts"
+    },
+    "./models/*": "./models/*"
   },
-  "targets": {
-    "main": {
-      "context": "node",
-      "outputFormat": "commonjs",
-      "includeNodeModules": false
-    },
-    "module": {
-      "context": "node",
-      "outputFormat": "esmodule",
-      "includeNodeModules": false
-    },
-    "web": {
-      "source": "src/browser.ts",
-      "context": "browser",
-      "outputFormat": "global",
-      "includeNodeModules": true,
-      "engines": {
-        "browsers": "> 0.5%, last 2 versions, not dead"
-      }
-    },
-    "types": {
-      "outputFormat": "commonjs"
-    }
+  "files": [
+    "dist",
+    "models"
+  ],
+  "scripts": {
+    "clean": "rimraf -rf dist",
+    "build:npm": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json",
+    "build:browser": "webpack --mode production",
+    "build": "npm run clean && npm run build:npm && npm run build:browser",
+    "watch": "tsc -w"
   },
   "peerDependencies": {
     "onnxruntime-web": "^1.14.0"
   },
   "devDependencies": {
-    "@parcel/packager-ts": "^2.16.3",
-    "@parcel/transformer-typescript-types": "^2.16.3",
-    "parcel": "^2.9.3",
-    "parcel-reporter-static-files-copy": "^1.5.3",
-    "typescript": "^5.0.0"
-  },
-  "staticFiles": [
-    {
-      "staticPath": "node_modules/onnxruntime-web/dist",
-      "staticOutPath": ""
-    },
-    {
-      "staticPath": "models/",
-      "staticOutPath": ""
-    }
-  ]
+    "copy-webpack-plugin": "^11.0.0",
+    "rimraf": "^6.1.2",
+    "ts-loader": "^9.4.0",
+    "typescript": "^5.0.0",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.0"
+  }
 }

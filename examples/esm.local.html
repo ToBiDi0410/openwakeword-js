@@ -1,0 +1,35 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="module">
+        import OpenWakeWordJS from '../dist/browser/openwakewordjs.umd.js';
+
+        //Minimal Usage example
+        const engine = new OpenWakeWordJS({
+            vadModelPath: "../dist/browser/models/silero_vad.onnx",
+            melModelPath: "../dist/browser/models/melspectrogram.onnx",
+            embeddingModelPath: "../dist/browser/models/embedding_model.onnx",
+            models: [
+                ['alexa', '../dist/browser/models/alexa_v0.1.onnx']
+                //Add your models as needed
+            ],
+            executionProviders: ["wasm"]
+        });
+
+        //Handles detections
+        engine.on('detect', (evt) => {
+            console.log(`🎯 Detected: "${evt.keyword}" (Score: ${evt.score.toFixed(2)})`, 'success');
+            document.body.innerHTML += "<a>DETECTED</a><br>";  
+        });
+
+        //Logs a graph to console each second
+        setInterval(() => console.log(engine.toDownStream()), 1000);
+
+        engine.start();
+    </script>
+</body>
+</html>

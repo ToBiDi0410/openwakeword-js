@@ -1,1 +1,2 @@
-export { WakeWordEngine } from "./WakeWordEngine";
+import { OpenWakeWordJS } from "./OpenWakeWordJS";
+export default OpenWakeWordJS;

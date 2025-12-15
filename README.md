@@ -9,43 +9,7 @@ A high-performance, event-driven implementation of [OpenWakeWord](https://github
 This library allows you to run robust wake word detection (e.g., "Hey Jarvis") entirely client-side using WebAssembly, with a novel **Graph/Node Architecture** that handles backpressure, buffering, and state management efficiently.
 
 # 🛠 Usage
-You can use this package without building by including the files in the dist branch via CDN!   
-```
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <script src="https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/browser.js"></script>
-    <script>
-        //Minimal Usage example
-        const engine = new WakeWordEngine({
-            vadModelPath: "https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/silero_vad.onnx",
-            melModelPath: "https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/melspectrogram.onnx",
-            embeddingModelPath: "https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/embedding_model.onnx",
-            models: [
-                ['alexa', 'https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/alexa_v0.1.onnx']
-                //Add your models as needed
-            ],
-            executionProviders: ["wasm"]
-        });
-
-        //Handles detections
-        engine.on('detect', (evt) => {
-            console.log(`🎯 Detected: "${evt.keyword}" (Score: ${evt.score.toFixed(2)})`, 'success');
-            document.body.innerHTML += "<a>DETECTED</a><br>";  
-        });
-
-        //Logs a graph to console each second
-        setInterval(() => console.log(engine.toDownStream()), 1000);
-
-        engine.start();
-    </script>
-</body>
-</html>
-```
+See the examples in `examples/`
 
 # 📝License & Attribution
 - [Open Wake Word on the Web](https://deepcorelabs.com/open-wake-word-on-the-web/) - by  Miro Hristov
