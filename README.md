@@ -1,4 +1,4 @@
-# OpenWakeWord JS (Graph-Based)
+# OpenWakeWord JS
 
 > [!CAUTION]  
 > This project is not actively maintained!   
