@@ -6,6 +6,7 @@ import { KeywordNode } from './nodes/KeywordNode';
 import { CallbackNode } from './nodes/CallbackNode';
 import { Detection } from './core/interfaces';
 import { EventEmitter } from './core/EventEmitter';
+import { env } from 'onnxruntime-web';
 
 export interface OpenWakeWordJSOptions {
     // Microphone
@@ -27,6 +28,7 @@ export interface OpenWakeWordJSOptions {
 
     // Global
     executionProviders?: string[];
+    wasmPaths?: string
 }
 
 export class OpenWakeWordJS extends EventEmitter {
@@ -63,18 +65,17 @@ export class OpenWakeWordJS extends EventEmitter {
         
         // Global
         executionProviders = ['wasm'],
+        wasmPaths = "./onnx/"
     }: OpenWakeWordJSOptions) {
         super();
         this.cooldownMs = cooldownMs;
         this._isCoolingDown = false;
+        env.wasm.wasmPaths = wasmPaths;
 
         // 1. Instantiate Nodes
         this.source = new MicrophoneNode("Microphone", sampleRate);
-        
         this.vad = new VadNode("Vad", vadModelPath, executionProviders);
-        
         this.vadState = new VadStateNode("VadState", vadHangoverFrames);
-        
         this.features = new FeatureNode(
             "Feature", 
             melModelPath, 
@@ -82,11 +83,9 @@ export class OpenWakeWordJS extends EventEmitter {
             executionProviders, 
             frameSize
         );
-        
         this.keywords = new KeywordNode("Keywords", models, executionProviders, threshold);
 
-        // 2. The Sink Logic (Replaces the old .on('data') event)
-        // This node sits at the end and handles the detections
+        // 2. The Sink Logic
         this.sink = new CallbackNode("Output", (detections: Detection[]) => {
             // Access VAD state directly from the node's public getter
             const isSpeech = this.vadState.isSpeechActive;
