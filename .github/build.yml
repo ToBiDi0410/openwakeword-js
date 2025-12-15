@@ -1,0 +1,49 @@
+name: Build and Deploy Error Pages
+
+on:
+  push:
+    branches:
+      - main  # or the branch you want to trigger on
+
+permissions:
+  contents: write
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up PNPM
+    - uses: pnpm/action-setup@v4
+      name: Install pnpm
+      with:
+        version: 9.6.0
+        run_install: false
+
+    # Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 22
+        cache: 'pnpm'
+
+    # Install dependencies
+    - name: Install dependencies
+      run: pnpm install
+
+    # Build using Parcel
+    - name: Build
+      env:
+        PARCEL_WORKER_BACKEND: process
+      run: npm run build
+
+    # Deploy to GitHub Pages
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages  # The branch you want to deploy to
+        folder: dist  # The folder to deploy from
