@@ -34,22 +34,24 @@ jobs:
         PARCEL_WORKER_BACKEND: process
       run: npm run build
 
-    # Deploy root directory
+    # Deploy: Create a commit on top of main and push to dist
     - name: Deploy to Dist Branch
       run: |
-        # Configure Git
+        # 1. Configure Git
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-        # Delete the files we want to exclude so they aren't indexed
+        # 2. Remove unwanted files so they aren't part of the dist branch
         rm -rf node_modules package-lock.json
 
-        # Create a fresh, empty branch
-        git checkout --orphan dist-branch
-        
-        # Add all remaining files (the new contents)
+        # 3. Stage the deletions and any other root changes
         git add .
-        
-        # Commit and Force Push to overwrite the remote 'dist' branch
-        git commit -m "Deploy to dist"
-        git push origin dist-branch:dist --force
+
+        # 4. Force add the build folder (CRITICAL STEP)
+        git add dist -f
+
+        # 5. Create the commit
+        git commit -m "Deploy build artifacts to dist"
+
+        # 6. Force push this specific commit to the remote 'dist' branch
+        git push origin HEAD:dist --force
