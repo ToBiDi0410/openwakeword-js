@@ -1,3 +1,4 @@
+import { env } from 'onnxruntime-web';
 import { MicrophoneNode } from './nodes/MicrophoneNode';
 import { VadNode } from './nodes/VadNode';
 import { VadStateNode } from './nodes/VadStateNode';
@@ -6,7 +7,6 @@ import { KeywordNode } from './nodes/KeywordNode';
 import { CallbackNode } from './nodes/CallbackNode';
 import { Detection } from './core/interfaces';
 import { EventEmitter } from './core/EventEmitter';
-import { env } from 'onnxruntime-web';
 
 export interface OpenWakeWordJSOptions {
     // Microphone
@@ -28,7 +28,7 @@ export interface OpenWakeWordJSOptions {
 
     // Global
     executionProviders?: string[];
-    wasmPaths?: string
+    wasmPaths?: string|Record<string, string>;
 }
 
 export class OpenWakeWordJS extends EventEmitter {
@@ -71,6 +71,7 @@ export class OpenWakeWordJS extends EventEmitter {
         this.cooldownMs = cooldownMs;
         this._isCoolingDown = false;
         env.wasm.wasmPaths = wasmPaths;
+        console.log("[OpenWakeWordJS] WASM Paths", wasmPaths);
 
         // 1. Instantiate Nodes
         this.source = new MicrophoneNode("Microphone", sampleRate);
