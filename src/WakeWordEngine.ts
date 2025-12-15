@@ -27,9 +27,6 @@ export interface WakeWordEngineOptions {
 
     // Global
     executionProviders?: string[];
-    
-    // Stats
-    statsInterval?: number; 
 }
 
 export class WakeWordEngine extends EventEmitter {
@@ -66,9 +63,6 @@ export class WakeWordEngine extends EventEmitter {
         
         // Global
         executionProviders = ['wasm'],
-        
-        // Stats
-        statsInterval = 1000
     }: WakeWordEngineOptions) {
         super();
         this.cooldownMs = cooldownMs;
