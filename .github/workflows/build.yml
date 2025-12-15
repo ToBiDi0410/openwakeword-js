@@ -42,7 +42,7 @@ jobs:
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
         # 2. Remove unwanted files so they aren't part of the dist branch
-        rm -rf node_modules package-lock.json
+        rm -rf node_modules package-lock.json .github examples src tsconfig* webpack* README*
 
         # 3. Stage the deletions and any other root changes
         git add .
