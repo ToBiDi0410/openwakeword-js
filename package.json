@@ -11,11 +11,10 @@
       "require": "./dist/cjs/index.js",
       "types": "./dist/esm/index.d.ts"
     },
-    "./models/*": "./models/*"
+    "./models/*": "./dist/models/*"
   },
   "files": [
-    "dist",
-    "models"
+    "dist"
   ],
   "scripts": {
     "clean": "rimraf -rf dist",

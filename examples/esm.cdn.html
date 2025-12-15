@@ -10,11 +10,11 @@
 
         //Minimal Usage example
         const engine = new OpenWakeWordJS({
-            vadModelPath: "https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/dist/browser/models/silero_vad.onnx",
-            melModelPath: "https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/dist/browser/models/melspectrogram.onnx",
-            embeddingModelPath: "https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/dist/browser/models/embedding_model.onnx",
+            vadModelPath: "https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/dist/models/silero_vad.onnx",
+            melModelPath: "https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/dist/models/melspectrogram.onnx",
+            embeddingModelPath: "https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/dist/models/embedding_model.onnx",
             models: [
-                ['alexa', 'https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/dist/browser/models/alexa_v0.1.onnx']
+                ['alexa', 'https://cdn.statically.io/gh/ToBiDi0410/openwakeword-js/dist/dist/models/alexa_v0.1.onnx']
                 //Add your models as needed
             ],
             executionProviders: ["wasm"],

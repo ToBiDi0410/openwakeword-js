@@ -9,11 +9,11 @@
     <script>
         //Minimal Usage example
         const engine = new OpenWakeWordJS({
-            vadModelPath: "../dist/browser/models/silero_vad.onnx",
-            melModelPath: "../dist/browser/models/melspectrogram.onnx",
-            embeddingModelPath: "../dist/browser/models/embedding_model.onnx",
+            vadModelPath: "../dist/models/silero_vad.onnx",
+            melModelPath: "../dist/models/melspectrogram.onnx",
+            embeddingModelPath: "../dist/models/embedding_model.onnx",
             models: [
-                ['alexa', '../dist/browser/models/alexa_v0.1.onnx']
+                ['alexa', '../dist/models/alexa_v0.1.onnx']
                 //Add your models as needed
             ],
             executionProviders: ["wasm"],

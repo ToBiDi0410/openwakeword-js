@@ -41,7 +41,7 @@ module.exports = [
         patterns: [
           { from: "node_modules/onnxruntime-web/dist/*.wasm", to: "onnx/[name][ext]" },
           { from: "node_modules/onnxruntime-web/dist/*.mjs", to: "onnx/[name][ext]" },
-          { from: "models/", to: "models/" }
+          { from: "models/", to: "../models/" }
         ],
       }),
     ],
